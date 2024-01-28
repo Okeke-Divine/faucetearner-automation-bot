@@ -1,9 +1,19 @@
 const puppeteer = require("puppeteer");
+require("dotenv").config();
 
 const mineLogic = async (res) => {
 let console_log = 1;
 
-puppeteer.launch({ headless: false }).then(async browser => {
+puppeteer.launch({ headless: false, args: [
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote",
+    ],
+    executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(), }).then(async browser => {
 
 
   const Emma_bot = {
