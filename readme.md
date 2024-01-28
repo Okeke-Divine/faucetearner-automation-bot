@@ -1,0 +1,1 @@
+Automation for https://faucetearner.org/ xrp airdrop
