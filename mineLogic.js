@@ -1,3 +1,4 @@
+console.log('mineLogic.js');
 const puppeteer = require("puppeteer");
 require("dotenv").config();
 
@@ -6,12 +7,12 @@ let console_log = 1;
 if (console_log == 1) { console.log('Mine Logic'); }
 
 puppeteer.launch({ headless: false, args: [
-      "--disable-setuid-sandbox",
-      "--no-sandbox",
-      "--single-process",
-      "--no-zygote",
+      // "--disable-setuid-sandbox",
+      // "--no-sandbox",
+      // "--single-process",
+      // "--no-zygote",
     ],
-    ignoreDefaultArgs: ['--disable-extensions'],
+    // ignoreDefaultArgs: ['--disable-extensions'],
     executablePath:
       process.env.NODE_ENV === "production"
         ? process.env.PUPPETEER_EXECUTABLE_PATH
@@ -37,7 +38,7 @@ puppeteer.launch({ headless: false, args: [
   await page.setRequestInterception(true);
 
   page.on('request', (req) => {
-     if(req.resourceType() == 'stylesheet' || req.resourceType() == 'font' || req.resourceType() == 'image'){
+     if(req.resourceType() == 'null' || req.resourceType() == 'null' || req.resourceType() == 'null'){
          req.abort();
      }
      else {
@@ -47,16 +48,11 @@ puppeteer.launch({ headless: false, args: [
   await page.goto('https://faucetearner.org');
   if (console_log == 1) { console.log('faucelearner.org->opended'); }
 
-  // Click on the "Login" button
   await page.click('a.btn-one[href="login.php"]');
   if (console_log == 1) { console.log('clicked on login button'); }
 
-  // Wait for the username, password  and button fields to load
-  await page.waitForSelector('input[name="email"]', {timeout: 0});
-  if (console_log == 1) { console.log('email selector active'); }
-
-  await page.waitForSelector('input[name="password"]', {timeout: 0});
-  if (console_log == 1) { console.log('password selector active'); }
+  await page.waitForSelector('input[name="email"]');
+  await page.waitForSelector('input[name="password"]');
 
 
   // Fill in the login form
@@ -66,10 +62,15 @@ puppeteer.launch({ headless: false, args: [
 
   await page.waitForSelector('button.reqbtn[type="button"]');
   if (console_log == 1) { console.log('button selector active'); }
-  // Click on the "Login" button
-  await page.click('button.reqbtn[type="button"]');
-  await page.click('button.reqbtn.btn-submit.w-100[type="button"]');
 
+  await page.click('button.reqbtn[type="button"]');
+  // await page.click('button.reqbtn.btn-submit.w-100[type="button"]');
+
+  if(page.click('button.reqbtn[type="button"]')){
+    console.log('loggin form submitted');
+  }else{
+    console.log('error');
+  }
 
   if (console_log == 1) { console.log('Logging in.....'); }
 
