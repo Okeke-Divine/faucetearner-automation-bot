@@ -6,11 +6,12 @@ const app = express()
 const PORT = process.env.PORT || 4000
 
 app.get("/", (req,res) => {
-  console.log('pinged')
+  res.send("Ping");
+  console.log('Ping')
   mineLogic(res)
 })
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`)
-  mineLogic()
+  // mineLogic()
 })
