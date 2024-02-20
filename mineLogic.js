@@ -6,6 +6,7 @@ let console_log = 1;
 if (console_log == 1) { console.log('Mine Logic'); }
 
 puppeteer.launch({ headless: true, args: [
+      "--disable-extensions",
       "--disable-setuid-sandbox",
       "--no-sandbox",
       "--single-process",
