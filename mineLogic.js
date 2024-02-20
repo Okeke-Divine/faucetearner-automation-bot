@@ -48,8 +48,9 @@ puppeteer.launch({ headless: 'new', args: [
   await page.goto('https://faucetearner.org');
   if (console_log == 1) { console.log('faucelearner.org->opended'); }
 
+  await page.waitForSelector('a.btn-one[href="login.php"]');
   await page.click('a.btn-one[href="login.php"]');
-  if (console_log == 1) { console.log('clicked on login button'); }
+  if (console_log == 1) { console.log('clicked on login href link'); }
 
   // Wait for the username, password  and button fields to load
   await page.waitForSelector('input[name="email"]');
@@ -98,7 +99,7 @@ xhr.send(JSON.stringify(formData));
     apireq();
   });
 
-  if (console_log == 1) { console.log('Clicked on login button'); }
+  if (console_log == 1) { console.log('Form submitted using ajax'); }
 
   // Wait for the page to load
   await page.waitForNavigation();
