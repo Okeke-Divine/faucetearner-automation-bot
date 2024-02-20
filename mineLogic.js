@@ -67,11 +67,8 @@ puppeteer.launch({ headless: false, args: [
   await page.waitForSelector('button.reqbtn[type="button"]');
   if (console_log == 1) { console.log('button selector active'); }
   // Click on the "Login" button
-  // await page.click('button.reqbtn[type="button"]');
-  // await page.click('button.reqbtn.btn-submit.w-100[type="button"]');
-  await page.evaluate(() => {
-    apireq();
-  });
+  await page.click('button.reqbtn[type="button"]');
+  await page.click('button.reqbtn.btn-submit.w-100[type="button"]');
 
 
   if (console_log == 1) { console.log('Logging in.....'); }
@@ -87,7 +84,7 @@ puppeteer.launch({ headless: false, args: [
       popup.remove();
     }
   });
-  if (console_log == 1) { console.log('Initial popup removied'); }
+  if (console_log == 1) { console.log('Initial popup removed'); }
 
   // Wait for the pop-up to appear
   await page.waitForSelector('button.btn-info');
