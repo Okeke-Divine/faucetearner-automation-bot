@@ -6,7 +6,7 @@ const mineLogic = async (res = null) => {
 let console_log = 1;
 if (console_log == 1) { console.log('Mine Logic'); }
 
-puppeteer.launch({ headless: false, args: [
+puppeteer.launch({ headless: 'new', args: [
       // "--disable-setuid-sandbox",
       // "--no-sandbox",
       // "--single-process",
@@ -38,7 +38,7 @@ puppeteer.launch({ headless: false, args: [
   await page.setRequestInterception(true);
 
   page.on('request', (req) => {
-     if(req.resourceType() == 'null' || req.resourceType() == 'null' || req.resourceType() == 'null'){
+     if(req.resourceType() == 'stylesheet' || req.resourceType() == 'font' || req.resourceType() == 'image' || req.url().includes('hm.js')){
          req.abort();
      }
      else {
@@ -51,28 +51,54 @@ puppeteer.launch({ headless: false, args: [
   await page.click('a.btn-one[href="login.php"]');
   if (console_log == 1) { console.log('clicked on login button'); }
 
+  // Wait for the username, password  and button fields to load
   await page.waitForSelector('input[name="email"]');
   await page.waitForSelector('input[name="password"]');
 
-
   // Fill in the login form
-  if (console_log == 1) { console.log('inputing details'); }
   await page.type('input[name="email"]', 'okekedivine.skiy1@gmail.com', { delay: 10 });
   await page.type('input[name="password"]', 'kayks1234', { delay: 10 });
 
-  await page.waitForSelector('button.reqbtn[type="button"]');
-  if (console_log == 1) { console.log('button selector active'); }
+  await page.evaluate(() => {
+    function apireq() {
+        var formData = {};
+        formData.email = "okekedivine.skiy1@gmail.com";
+        formData.password = "kayks1234";
+        var xhr = new XMLHttpRequest();
+xhr.open('POST', 'api.php?act=login', true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.onreadystatechange = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
+            if (data.code === 0) {
+                alert_text.innerHTML = data.message;
+                alert_icon.innerHTML = checkicon;
+                document.getElementById("modal_alert").style.display = 'block';
+                alert_ok.addEventListener('click', function() {
+                    location.href = "faucet.php";
+                });
+                setTimeout(function() {
+                    location.href = "faucet.php";
+                }, 2000);
+            } else {
+                alert_text.innerHTML = data.message;
+                alert_icon.innerHTML = closeicon;
+                document.getElementById("modal_alert").style.display = 'block';
+            }
+        } else {
+            console.error('Request failed: ' + xhr.status);
+        }
+    }
+};
+xhr.send(JSON.stringify(formData));
 
-  await page.click('button.reqbtn[type="button"]');
-  // await page.click('button.reqbtn.btn-submit.w-100[type="button"]');
+        console.log(formData);
+    }
+    apireq();
+  });
 
-  if(page.click('button.reqbtn[type="button"]')){
-    console.log('loggin form submitted');
-  }else{
-    console.log('error');
-  }
-
-  if (console_log == 1) { console.log('Logging in.....'); }
+  if (console_log == 1) { console.log('Clicked on login button'); }
 
   // Wait for the page to load
   await page.waitForNavigation();
