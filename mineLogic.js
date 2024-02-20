@@ -5,7 +5,7 @@ const mineLogic = async (res = null) => {
 let console_log = 1;
 if (console_log == 1) { console.log('Mine Logic'); }
 
-puppeteer.launch({ headless: 'new', args: [
+puppeteer.launch({ headless: false, args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
       "--single-process",
@@ -34,6 +34,16 @@ puppeteer.launch({ headless: 'new', args: [
     width: Emma_bot.screenWdith,
     height: Emma_bot.screenHeight,
   });
+  await page.setRequestInterception(true);
+
+  page.on('request', (req) => {
+     if(req.resourceType() == 'stylesheet' || req.resourceType() == 'font' || req.resourceType() == 'image'){
+         req.abort();
+     }
+     else {
+         req.continue();
+     }
+ });
   await page.goto('https://faucetearner.org');
   if (console_log == 1) { console.log('faucelearner.org->opended'); }
 
@@ -54,16 +64,17 @@ puppeteer.launch({ headless: 'new', args: [
   await page.type('input[name="email"]', 'okekedivine.skiy1@gmail.com', { delay: 10 });
   await page.type('input[name="password"]', 'kayks1234', { delay: 10 });
 
-  if (console_log == 1) { console.log('button selector active'); }
   await page.waitForSelector('button.reqbtn[type="button"]');
+  if (console_log == 1) { console.log('button selector active'); }
   // Click on the "Login" button
-  await page.click('button.reqbtn[type="button"]');
-  if (console_log == 1) { console.log('Clicked on button'); }
-  if (console_log == 1) { console.log('Logging in.....'); }
+  // await page.click('button.reqbtn[type="button"]');
+  // await page.click('button.reqbtn.btn-submit.w-100[type="button"]');
+  await page.evaluate(() => {
+    apireq();
+  });
 
-  if (console_log == 1) {
-    console.log("Log in successful");
-  }
+
+  if (console_log == 1) { console.log('Logging in.....'); }
 
   // Wait for the page to load
   await page.waitForNavigation();
