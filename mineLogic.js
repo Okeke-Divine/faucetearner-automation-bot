@@ -1,6 +1,6 @@
 console.log('mineLogic.js');
 const puppeteer = require("puppeteer");
-require("dotenv").config();
+// require("dotenv").config();
 
 const mineLogic = async (res = null) => {
 let console_log = 1;
@@ -13,10 +13,11 @@ puppeteer.launch({ headless: 'new', args: [
       // "--no-zygote",
     ],
     // ignoreDefaultArgs: ['--disable-extensions'],
-    executablePath:
-      process.env.NODE_ENV === "production"
-        ? process.env.PUPPETEER_EXECUTABLE_PATH
-        : puppeteer.executablePath(), }).then(async browser => {
+    // executablePath:
+    //   process.env.NODE_ENV === "production"
+    //     ? process.env.PUPPETEER_EXECUTABLE_PATH
+    //     : puppeteer.executablePath(),
+      }).then(async browser => {
 
 
   const Emma_bot = {
@@ -54,7 +55,9 @@ puppeteer.launch({ headless: 'new', args: [
 
   // Wait for the username, password  and button fields to load
   await page.waitForSelector('input[name="email"]', {timeout: 0});
+  if (console_log == 1) { console.log('email input is active'); }
   await page.waitForSelector('input[name="password"]', {timeout: 0});
+  if (console_log == 1) { console.log('password input is active'); }
 
   // Fill in the login form
   await page.type('input[name="email"]', 'okekedivine.skiy1@gmail.com', { delay: 10 });
