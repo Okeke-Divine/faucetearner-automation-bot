@@ -1,22 +1,22 @@
 console.log('mineLogic.js');
 const puppeteer = require("puppeteer");
-// require("dotenv").config();
+require("dotenv").config();
 
 const mineLogic = async (res = null) => {
 let console_log = 1;
 if (console_log == 1) { console.log('Mine Logic'); }
 
-puppeteer.launch({ headless: 'new', args: [
+puppeteer.launch({ headless: false, args: [
       // "--disable-setuid-sandbox",
       // "--no-sandbox",
       // "--single-process",
       // "--no-zygote",
     ],
     // ignoreDefaultArgs: ['--disable-extensions'],
-    // executablePath:
-    //   process.env.NODE_ENV === "production"
-    //     ? process.env.PUPPETEER_EXECUTABLE_PATH
-    //     : puppeteer.executablePath(),
+    executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
       }).then(async browser => {
 
 
@@ -40,7 +40,8 @@ puppeteer.launch({ headless: 'new', args: [
 
   page.on('request', (req) => {
      if(req.resourceType() == 'stylesheet' || req.resourceType() == 'font' || req.resourceType() == 'image' || req.url().includes('hm.js')){
-         req.abort();
+        req.continue();
+         // req.abort();
      }
      else {
          req.continue();
@@ -49,7 +50,7 @@ puppeteer.launch({ headless: 'new', args: [
   await page.goto('https://faucetearner.org');
   if (console_log == 1) { console.log('faucelearner.org->opended'); }
 
-  await page.waitForSelector('a.btn-one[href="login.php"]', {timeout: 0});
+  await page.waitForSelector('a.btn-one[href="login.php"]', {timeout: 900000});
   await page.click('a.btn-one[href="login.php"]');
   if (console_log == 1) { console.log('clicked on login href link'); }
 
