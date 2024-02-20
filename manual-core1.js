@@ -1,26 +1,21 @@
-const puppeteer = require("puppeteer");
-require("dotenv").config();
-
-const mineLogic = async (res = null) => {
+// if you want to recieve live updates via console set to 1 else set to 0
 let console_log = 1;
-if (console_log == 1) { console.log('Mine Logic File Loaded'); }
 
-puppeteer.launch({ headless: false, args: [
-      "--disable-setuid-sandbox",
-      "--no-sandbox",
-      "--single-process",
-      "--no-zygote",
-    ],
-    executablePath:
-      process.env.NODE_ENV === "production"
-        ? process.env.PUPPETEER_EXECUTABLE_PATH
-        : puppeteer.executablePath(), }).then(async browser => {
+let puppeteer;
+
+if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+  puppeteer = require("puppeteer-core");
+} else {
+  puppeteer = require("puppeteer");
+}
+
+puppeteer.launch({ headless: 'new' }).then(async browser => {
 
 
   const Emma_bot = {
     useragent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    screenWdith: 412,
-    screenHeight: 914,
+    screenWdith: 1366,
+    screenHeight: 768,
   }
 
   const page = await browser.newPage();
@@ -45,8 +40,8 @@ puppeteer.launch({ headless: false, args: [
   await page.waitForSelector('input[name="password"]');
 
   // Fill in the login form
-  await page.type('input[name="email"]', 'okekedivine.skiy1@gmail.com', { delay: 10 });
-  await page.type('input[name="password"]', 'kayks1234', { delay: 10 });
+  await page.type('input[name="email"]', 'divinho', { delay: 10 });
+  await page.type('input[name="password"]', 'divine1234', { delay: 10 });
 
 
   await page.waitForSelector('button.reqbtn[type="button"]');
@@ -134,7 +129,3 @@ puppeteer.launch({ headless: false, args: [
   if (console_log == 1) { console.log('Injection End'); }
 
 })
-}
-
-
-module.exports = {mineLogic}
