@@ -6,7 +6,7 @@ const mineLogic = async (res = null) => {
 let console_log = 1;
 if (console_log == 1) { console.log('Mine Logic'); }
 
-puppeteer.launch({ headless: false, args: [
+puppeteer.launch({ headless: 'new', args: [
       // "--disable-setuid-sandbox",
       // "--no-sandbox",
       // "--single-process",
