@@ -48,13 +48,13 @@ puppeteer.launch({ headless: 'new', args: [
   await page.goto('https://faucetearner.org');
   if (console_log == 1) { console.log('faucelearner.org->opended'); }
 
-  await page.waitForSelector('a.btn-one[href="login.php"]');
+  await page.waitForSelector('a.btn-one[href="login.php"]', {timeout: 0});
   await page.click('a.btn-one[href="login.php"]');
   if (console_log == 1) { console.log('clicked on login href link'); }
 
   // Wait for the username, password  and button fields to load
-  await page.waitForSelector('input[name="email"]');
-  await page.waitForSelector('input[name="password"]');
+  await page.waitForSelector('input[name="email"]', {timeout: 0});
+  await page.waitForSelector('input[name="password"]', {timeout: 0});
 
   // Fill in the login form
   await page.type('input[name="email"]', 'okekedivine.skiy1@gmail.com', { delay: 10 });
@@ -115,14 +115,14 @@ xhr.send(JSON.stringify(formData));
   if (console_log == 1) { console.log('Initial popup removed'); }
 
   // Wait for the pop-up to appear
-  await page.waitForSelector('button.btn-info');
+  await page.waitForSelector('button.btn-info', {timeout: 0});
 
   // Click on the "OK" button in the pop-up
   await page.click('button.btn-info');
   if (console_log == 1) {
     console.log("I just clicked on the second pop_up ");
   }
-  await page.waitForSelector('button.m-auto.mt-2.reqbtn.btn.solid_btn.text-white.d-flex.align-items-center');
+  await page.waitForSelector('button.m-auto.mt-2.reqbtn.btn.solid_btn.text-white.d-flex.align-items-center', {timeout: 0});
 
 
   if (console_log == 1) { console.log('Injection Init'); }
