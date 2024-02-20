@@ -42,21 +42,27 @@ puppeteer.launch({ headless: true, args: [
   if (console_log == 1) { console.log('clicked on login button'); }
 
   // Wait for the username, password  and button fields to load
-  await page.waitForSelector('input[name="email"]');
-  await page.waitForSelector('input[name="password"]');
+  await page.waitForSelector('input[name="email"]', {timeout: 0});
+  if (console_log == 1) { console.log('email selector active'); }
+
+  await page.waitForSelector('input[name="password"]', {timeout: 0});
+  if (console_log == 1) { console.log('password selector active'); }
+
 
   // Fill in the login form
+  if (console_log == 1) { console.log('inputing details'); }
   await page.type('input[name="email"]', 'okekedivine.skiy1@gmail.com', { delay: 10 });
   await page.type('input[name="password"]', 'kayks1234', { delay: 10 });
 
-
+  if (console_log == 1) { console.log('button selector active'); }
   await page.waitForSelector('button.reqbtn[type="button"]');
   // Click on the "Login" button
   await page.click('button.reqbtn[type="button"]');
+  if (console_log == 1) { console.log('Clicked on button'); }
   if (console_log == 1) { console.log('Logging in.....'); }
 
   if (console_log == 1) {
-    console.log("I'm logged in");
+    console.log("Log in successful");
   }
 
   // Wait for the page to load
