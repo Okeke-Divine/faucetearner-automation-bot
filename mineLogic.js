@@ -1,10 +1,13 @@
 console.log('mineLogic.js');
-const puppeteer = require("puppeteer");
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
 require("dotenv").config();
 
 const mineLogic = async (res = null) => {
 let console_log = 1;
 if (console_log == 1) { console.log('Mine Logic'); }
+
 
 puppeteer.launch({ headless: 'new', args: [
       // "--disable-setuid-sandbox",
