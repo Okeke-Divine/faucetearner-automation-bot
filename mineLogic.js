@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const mineLogic = async (res = null) => {
 let console_log = 1;
-if (console_log == 1) { console.log('Mine Logic File Loaded'); }
+if (console_log == 1) { console.log('Mine Logic'); }
 
 puppeteer.launch({ headless: false, args: [
       "--disable-setuid-sandbox",
@@ -19,8 +19,8 @@ puppeteer.launch({ headless: false, args: [
 
   const Emma_bot = {
     useragent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    screenWdith: 412,
-    screenHeight: 914,
+    screenWdith: 1366,
+    screenHeight: 768,
   }
 
   const page = await browser.newPage();
