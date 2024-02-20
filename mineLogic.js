@@ -6,12 +6,12 @@ let console_log = 1;
 if (console_log == 1) { console.log('Mine Logic'); }
 
 puppeteer.launch({ headless: true, args: [
-      "--disable-extensions",
       "--disable-setuid-sandbox",
       "--no-sandbox",
       "--single-process",
       "--no-zygote",
     ],
+    ignoreDefaultArgs: ['--disable-extensions'],
     executablePath:
       process.env.NODE_ENV === "production"
         ? process.env.PUPPETEER_EXECUTABLE_PATH
